@@ -1,16 +1,21 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-galleryWrap.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (e.target.nodeName === 'IMG') {
+const onCreateGallery = () => {
 
-        const instance = basicLightbox.create(`
-            <img src="assets/images/image.png" width="800" height="600">
-            `)
+    const galleryWrap = document.querySelector('.gallery');
 
-            instance.show()
-    }
-})
+    galleryItems.forEach(image => {
+        galleryWrap.insertAdjacentHTML(
+            'afterbegin', 
+            `<a class="gallery__link" href="${image.original}"><img class="gallery__image" src="${image.preview}" data-source="${image.original}" alt="${image.description}"></a>`);
+    })
+
+    const lightbox = new SimpleLightbox('.gallery a', {
+        captionsData: "alt",
+        captionDelay: 250,
+      })
+}
 
 console.log(galleryItems);
+onCreateGallery();
